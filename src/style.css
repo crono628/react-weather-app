@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Gabriela', serif;
 }
 
 .app {
@@ -13,7 +14,7 @@ nav {
   justify-content: space-around;
   align-items: center;
   min-height: 10vh;
-  background-color: slategray;
+  background-color: steelblue;
   color: white;
 }
 
@@ -23,4 +24,39 @@ nav {
   justify-content: space-around;
   list-style: none;
   align-items: center;
+}
+
+ul {
+  text-decoration: none;
+  list-style-type: none;
+}
+
+li {
+  cursor: pointer;
+}
+
+.weather-for > label {
+  cursor: pointer;
+}
+
+.zipcode {
+  width: 75px;
+  background-color: #54a0df;
+}
+
+input {
+  margin-left: 5px;
+  border-radius: 5px;
+  padding-left: 3px;
+  color: white;
+}
+
+input::placeholder {
+  color: white;
+  padding-left: 3px;
+}
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
