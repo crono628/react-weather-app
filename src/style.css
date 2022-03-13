@@ -11,13 +11,18 @@ html {
 
 .app {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  height: 60px;
+  width: 100%;
   background-color: steelblue;
   color: white;
   padding: 0px 10px 0px 10px;
@@ -37,18 +42,15 @@ nav {
 }
 
 .zipcode {
-  width: 75px;
+  width: 62px;
   background-color: #54a0df;
-}
-
-input {
   margin-left: 5px;
   border-radius: 5px;
   padding-left: 3px;
   color: white;
 }
 
-input::placeholder {
+.zipcode::placeholder {
   color: white;
   padding-left: 3px;
 }
@@ -60,9 +62,29 @@ input::placeholder {
 }
 
 img {
-  width: 75px;
+  width: 100px;
 }
 
 .current {
   margin-right: 3vmin;
+}
+
+.submit-btn {
+  font-size: 10px;
+  border-radius: 3px;
+}
+
+.hourly {
+  display: flex;
+  margin-top: 25px;
+  padding-bottom: 15px;
+  align-items: center;
+  max-width: 400px;
+  overflow-x: scroll;
+  border-left: solid black 4px;
+  border-right: solid black 4px;
+}
+
+.hourly-time {
+  margin: 10px;
 }

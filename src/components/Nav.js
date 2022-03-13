@@ -12,8 +12,8 @@ const Nav = (props) => {
       <Link style={navStyle} to={'/react-weather-app/'}>
         <h3 className="weather-for">
           <form onSubmit={props.handleSubmit}>
-            <label htmlFor="zipcode">
-              Weather for
+            <label htmlFor="zipcode">Weather for</label>
+            <div>
               <input
                 minLength="5"
                 maxLength="5"
@@ -24,7 +24,12 @@ const Nav = (props) => {
                 className="zipcode"
                 placeholder="zipcode"
               />
-            </label>
+              <input
+                onClick={props.onClick}
+                className="submit-btn"
+                type="submit"
+              />
+            </div>
           </form>
         </h3>
       </Link>

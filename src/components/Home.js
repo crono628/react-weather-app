@@ -8,6 +8,7 @@ const Home = (props) => {
         <h2>
           {props.city}, {props.state} it is {props.temp}°
         </h2>
+        <h2>and {props.desc}</h2>
         <img src={props.src} />
       </div>
     </div>
@@ -16,8 +17,7 @@ const Home = (props) => {
   return (
     <div>
       <h4>{props.date}</h4>
-      <h6>{props.time}</h6>
-      {props.boolSwitch ? 'Loading' : welcomeDiv}
+      {props.boolSwitch ? 'Gathering info' : welcomeDiv}
     </div>
   );
 };

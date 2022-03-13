@@ -16,18 +16,16 @@ const App = () => {
   );
   const [icon, setIcon] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [date, setDate] = useState(new Date());
   const [geo, setGeo] = useState(null);
+  const [hourlyTemps, setHourlyTemps] = useState([]);
+  const [date, setDate] = useState(new Date());
   let homeText = document.querySelector('.home');
   let navigate = useNavigate();
 
   useEffect(() => {
     getWeather();
-    let timer = setInterval(() => tick(), 1000);
-    clearInterval(timer);
+    console.log(sevenDay);
   }, []);
-
-  const tick = () => setDate(new Date());
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,9 +35,7 @@ const App = () => {
   };
 
   const handleChange = (e) => {
-    document.querySelector('.home').textContent = '';
     setZip(e.target.value);
-    setIcon(null);
   };
 
   const apiValueBasic = () =>
@@ -57,7 +53,6 @@ const App = () => {
     try {
       const basicData = await fetch(apiValueBasic(), { mode: 'cors' });
       const basicJson = await basicData.json();
-      console.log(basicJson);
       const advancedData = await fetch(
         apiValueComprehensive(basicJson.coord.lat, basicJson.coord.lon)
       );
@@ -66,16 +61,22 @@ const App = () => {
         geocode(basicJson.coord.lat, basicJson.coord.lon)
       );
       const geoCodeJson = await geocodeData.json();
-      console.log(geoCodeJson);
 
+      let hourlyArr = [];
+      for (let i = 0; i < 12; i++) {
+        hourlyArr.push({
+          temp: Math.floor(advancedJson.hourly[i].temp),
+          time: new Date(advancedJson.hourly[i].dt * 1000),
+        });
+      }
+
+      setHourlyTemps(hourlyArr);
       setCurrentForecast(basicJson);
-      setSevenDay(basicJson);
+      setSevenDay(advancedJson);
       setGeo(geoCodeJson);
       setIcon(
-        `https://openweathermap.org/img/w/${basicJson.weather[0].icon}.png`
+        `https://openweathermap.org/img/wn/${basicJson.weather[0].icon}@2x.png`
       );
-
-      console.log(advancedJson);
     } catch (err) {
       console.log(err);
     }
@@ -84,23 +85,52 @@ const App = () => {
 
   return (
     <div className="app">
-      <Nav handleChange={handleChange} handleSubmit={handleSubmit} />
+      <Nav
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        onClick={handleSubmit}
+      />
       <Routes>
         <Route
           path="/react-weather-app/"
           element={
             <Home
-              time={date.toLocaleTimeString()}
               date={date.toLocaleDateString()}
               city={loading ? null : currentForecast.name}
               src={loading ? null : icon}
               temp={loading ? null : Math.floor(currentForecast.main.temp)}
               state={loading ? null : geo[0].state}
               boolSwitch={loading}
+              desc={loading ? null : currentForecast.weather[0].description}
             />
           }
         />
-        <Route path="/current" element={<Current />} />
+        <Route
+          path="/current"
+          element={
+            <Current
+              date={date.toLocaleDateString()}
+              city={loading ? null : currentForecast.name}
+              src={loading ? null : icon}
+              temp={loading ? null : Math.floor(currentForecast.main.temp)}
+              state={loading ? null : geo[0].state}
+              boolSwitch={loading}
+              desc={loading ? null : currentForecast.weather[0].description}
+              hourly={
+                loading
+                  ? null
+                  : hourlyTemps.map((item) => {
+                      return (
+                        <div key={uniqid()}>
+                          <div className="hourly-time">{`${item.time.getHours()}:00`}</div>
+                          <div className="hourly-temp">{item.temp}°</div>
+                        </div>
+                      );
+                    })
+              }
+            />
+          }
+        />
         <Route path="/seven-day" element={<SevenDay />} />
       </Routes>
     </div>
