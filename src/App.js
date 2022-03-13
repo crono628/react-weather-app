@@ -87,7 +87,7 @@ const App = () => {
       <Nav handleChange={handleChange} handleSubmit={handleSubmit} />
       <Routes>
         <Route
-          path="/"
+          path=""
           element={
             <Home
               time={date.toLocaleTimeString()}
