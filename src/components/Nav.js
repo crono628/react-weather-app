@@ -29,15 +29,15 @@ const Nav = (props) => {
         </h3>
       </Link>
 
-      <ul className="nav-links">
+      <div className="nav-links">
         <Link style={navStyle} to={'/current'}>
-          <li>Current Conditions</li>
+          <div className="current">Current Conditions</div>
         </Link>
 
         <Link style={navStyle} to={'/seven-day'}>
-          <li>7-day Forecast</li>
+          <div>7-day Forecast</div>
         </Link>
-      </ul>
+      </div>
     </nav>
   );
 };

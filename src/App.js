@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Current from './components/Current';
 import Nav from './components/Nav';
+import Home from './components/Home';
 import SevenDay from './components/SevenDay';
 import './style.css';
 import { Routes, Route, useNavigate } from 'react-router-dom';
@@ -16,6 +17,7 @@ const App = () => {
   const [icon, setIcon] = useState(null);
   const [loading, setLoading] = useState(true);
   const [date, setDate] = useState(new Date());
+  const [geo, setGeo] = useState(null);
   let homeText = document.querySelector('.home');
   let navigate = useNavigate();
 
@@ -47,10 +49,11 @@ const App = () => {
     `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely,alerts&appid=53dcc962829731a4fa033950e8997254`;
 
   const geocode = (lat, lon) =>
-    `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=53dcc962829731a4fa033950e8997254`;
+    `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=53dcc962829731a4fa033950e8997254`;
 
   async function getWeather() {
     setLoading(true);
+
     try {
       const basicData = await fetch(apiValueBasic(), { mode: 'cors' });
       const basicJson = await basicData.json();
@@ -59,8 +62,15 @@ const App = () => {
         apiValueComprehensive(basicJson.coord.lat, basicJson.coord.lon)
       );
       const advancedJson = await advancedData.json();
+      const geocodeData = await fetch(
+        geocode(basicJson.coord.lat, basicJson.coord.lon)
+      );
+      const geoCodeJson = await geocodeData.json();
+      console.log(geoCodeJson);
+
       setCurrentForecast(basicJson);
       setSevenDay(basicJson);
+      setGeo(geoCodeJson);
       setIcon(
         `https://openweathermap.org/img/w/${basicJson.weather[0].icon}.png`
       );
@@ -82,30 +92,17 @@ const App = () => {
             <Home
               time={date.toLocaleTimeString()}
               date={date.toLocaleDateString()}
-              city={currentForecast.name}
+              city={loading ? null : currentForecast.name}
               src={loading ? null : icon}
               temp={loading ? null : Math.floor(currentForecast.main.temp)}
+              state={loading ? null : geo[0].state}
+              boolSwitch={loading}
             />
           }
         />
         <Route path="/current" element={<Current />} />
         <Route path="/seven-day" element={<SevenDay />} />
       </Routes>
-    </div>
-  );
-};
-
-const Home = (props) => {
-  return (
-    <div>
-      <h4>{props.date}</h4>
-      <h6>{props.time}</h6>
-      <div className="welcome">
-        <h2 className="home">
-          Currently in {props.city} it is {props.temp}°
-        </h2>
-        <img src={props.src} />
-      </div>
     </div>
   );
 };

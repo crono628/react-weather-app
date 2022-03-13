@@ -5,34 +5,31 @@
   font-family: 'Gabriela', serif;
 }
 
+html {
+  background-color: #9cc3e4;
+}
+
 .app {
   text-align: center;
 }
 
 nav {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  min-height: 10vh;
+  height: 50px;
   background-color: steelblue;
   color: white;
+  padding: 0px 10px 0px 10px;
 }
 
 .nav-links {
-  width: 40%;
+  width: 100px;
   display: flex;
-  justify-content: space-around;
-  list-style: none;
+  flex: 1;
+  justify-content: flex-end;
   align-items: center;
-}
-
-ul {
-  text-decoration: none;
-  list-style-type: none;
-}
-
-li {
-  cursor: pointer;
+  font-size: 2.8vmin;
 }
 
 .weather-for > label {
@@ -55,8 +52,17 @@ input::placeholder {
   color: white;
   padding-left: 3px;
 }
+
 .welcome {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+img {
+  width: 75px;
+}
+
+.current {
+  margin-right: 3vmin;
 }
