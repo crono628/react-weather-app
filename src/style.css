@@ -6,7 +6,7 @@
 }
 
 html {
-  background-color: #9cc3e4;
+  background-color: #8abce6;
 }
 
 .app {
@@ -23,7 +23,7 @@ nav {
   align-items: center;
   height: 60px;
   width: 100%;
-  background-color: steelblue;
+  background-color: #4682b4;
   color: white;
   padding: 0px 10px 0px 10px;
 }
@@ -43,7 +43,7 @@ nav {
 
 .zipcode {
   width: 62px;
-  background-color: #54a0df;
+  background-color: #4682b4;
   margin-left: 5px;
   border-radius: 5px;
   padding-left: 3px;
@@ -79,12 +79,25 @@ img {
   margin-top: 25px;
   padding-bottom: 15px;
   align-items: center;
-  max-width: 400px;
+  height: 120px;
+  min-width: 350px;
+  max-width: 50vw;
   overflow-x: scroll;
-  border-left: solid black 4px;
-  border-right: solid black 4px;
+  border-left: solid #344654 4px;
+  border-right: solid #344654 4px;
+  background-color: #4683b444;
 }
 
 .hourly-time {
   margin: 10px;
+}
+
+.interface {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 325px;
+  max-width: 50vw;
 }
