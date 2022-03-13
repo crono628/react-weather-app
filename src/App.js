@@ -87,7 +87,7 @@ const App = () => {
       <Nav handleChange={handleChange} handleSubmit={handleSubmit} />
       <Routes>
         <Route
-          path=""
+          path="/react-weather-app/"
           element={
             <Home
               time={date.toLocaleTimeString()}

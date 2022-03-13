@@ -9,7 +9,7 @@ const Nav = (props) => {
 
   return (
     <nav>
-      <Link style={navStyle} to={''}>
+      <Link style={navStyle} to={'/react-weather-app/'}>
         <h3 className="weather-for">
           <form onSubmit={props.handleSubmit}>
             <label htmlFor="zipcode">
