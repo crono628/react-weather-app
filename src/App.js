@@ -62,6 +62,7 @@ const App = () => {
         hourlyArr.push({
           temp: Math.floor(advancedJson.hourly[i].temp),
           time: new Date(advancedJson.hourly[i].dt * 1000),
+          icon: `https://openweathermap.org/img/w/${advancedJson.hourly[i].weather[0].icon}.png`,
         });
       }
 
@@ -75,6 +76,8 @@ const App = () => {
         sunsetMinutes:
           (sunset.getMinutes() < 10 ? '0' : '') + sunset.getMinutes(),
       });
+
+      console.log(basicJson);
 
       setSun(sunArr);
       setHourlyTemps(hourlyArr);
@@ -120,6 +123,7 @@ const App = () => {
                               item.time.getMonth() + 1
                             }/${item.time.getDate()}`}</div>
                             <div className="hourly-time">{`${item.time.getHours()}:00`}</div>
+                            <img src={item.icon} className="hourly-icon" />
                             <div className="hourly-temp">{item.temp}°</div>
                           </div>
                         );
