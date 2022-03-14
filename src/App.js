@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Current from './components/Current';
 import Nav from './components/Nav';
 import Home from './components/Home';
 import SevenDay from './components/SevenDay';
@@ -18,20 +17,16 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [geo, setGeo] = useState(null);
   const [hourlyTemps, setHourlyTemps] = useState([]);
-  const [date, setDate] = useState(new Date());
-  let homeText = document.querySelector('.home');
-  let navigate = useNavigate();
-
+  const [sun, setSun] = useState([]);
+  const date = new Date();
   useEffect(() => {
     getWeather();
-    console.log(sevenDay);
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setZip(document.getElementById('zipcode').value);
     getWeather();
-    navigate('/current');
   };
 
   const handleChange = (e) => {
@@ -49,7 +44,6 @@ const App = () => {
 
   async function getWeather() {
     setLoading(true);
-
     try {
       const basicData = await fetch(apiValueBasic(), { mode: 'cors' });
       const basicJson = await basicData.json();
@@ -63,13 +57,26 @@ const App = () => {
       const geoCodeJson = await geocodeData.json();
 
       let hourlyArr = [];
-      for (let i = 0; i < 12; i++) {
+      let sunArr = [];
+      for (let i = 0; i < 24; i++) {
         hourlyArr.push({
           temp: Math.floor(advancedJson.hourly[i].temp),
           time: new Date(advancedJson.hourly[i].dt * 1000),
         });
       }
 
+      let sunrise = new Date(basicJson.sys.sunrise * 1000);
+      let sunset = new Date(basicJson.sys.sunset * 1000);
+      sunArr.push({
+        sunriseHours: sunrise.getHours(),
+        sunriseMinutes:
+          (sunrise.getMinutes() < 10 ? '0' : '') + sunrise.getMinutes(),
+        sunsetHours: sunset.getHours(),
+        sunsetMinutes:
+          (sunset.getMinutes() < 10 ? '0' : '') + sunset.getMinutes(),
+      });
+
+      setSun(sunArr);
       setHourlyTemps(hourlyArr);
       setCurrentForecast(basicJson);
       setSevenDay(advancedJson);
@@ -90,26 +97,12 @@ const App = () => {
         handleSubmit={handleSubmit}
         onClick={handleSubmit}
       />
-      <div class="interface">
+      <div className="interface">
         <Routes>
           <Route
             path="/react-weather-app/"
             element={
               <Home
-                date={date.toLocaleDateString()}
-                city={loading ? null : currentForecast.name}
-                src={loading ? null : icon}
-                temp={loading ? null : Math.floor(currentForecast.main.temp)}
-                state={loading ? null : geo[0].state}
-                boolSwitch={loading}
-                desc={loading ? null : currentForecast.weather[0].description}
-              />
-            }
-          />
-          <Route
-            path="/current"
-            element={
-              <Current
                 date={date.toLocaleDateString()}
                 city={loading ? null : currentForecast.name}
                 src={loading ? null : icon}
@@ -129,6 +122,17 @@ const App = () => {
                             <div className="hourly-time">{`${item.time.getHours()}:00`}</div>
                             <div className="hourly-temp">{item.temp}°</div>
                           </div>
+                        );
+                      })
+                }
+                sun={
+                  loading
+                    ? null
+                    : sun.map((item) => {
+                        return (
+                          <div
+                            key={uniqid()}
+                          >{`Sunrise: ${item.sunriseHours}:${item.sunriseMinutes} - Sunset: ${item.sunsetHours}:${item.sunsetMinutes}`}</div>
                         );
                       })
                 }
