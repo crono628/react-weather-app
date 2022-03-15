@@ -2,7 +2,7 @@ import React from 'react';
 
 const Home = (props) => {
   const welcomeDiv = (
-    <div className="welcome">
+    <div className="welcome scale-in-center">
       <div className="sun">{props.sun}</div>
       <div>
         <h2 className="home">Currently in</h2>

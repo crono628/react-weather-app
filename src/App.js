@@ -160,7 +160,7 @@ const App = () => {
               <SevenDay boolSwitch={loading}>
                 {sevenDay.map((day) => {
                   return (
-                    <div key={uniqid()}>
+                    <div className="scale-in-center" key={uniqid()}>
                       <DailyCard
                         low={`${Math.floor(day.low)}°`}
                         high={`${Math.floor(day.high)}°`}
