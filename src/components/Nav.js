@@ -35,7 +35,7 @@ const Nav = (props) => {
       </Link>
       <div className="nav-links">
         <Link style={navStyle} to={'/seven-day'}>
-          <div id="seven-day">7-day Forecast</div>
+          <h4 id="seven-day">7-day Forecast</h4>
         </Link>
       </div>
     </nav>
